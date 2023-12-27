@@ -1,10 +1,19 @@
-from flask import Flask, render_template, request
 import sqlite3
+from flask import Flask, render_template
+
 
 app = Flask(__name__)
 
 @app.route('/')  
 def index():
+    """
+    Route for the home page.
+
+    Retrieves CV data from the SQLite database and renders the 'index.html' template.
+
+    Returns:
+        str: Rendered HTML content for the home page.
+    """
     conn = sqlite3.connect('cv_database.db')
     c = conn.cursor()
     c.execute("SELECT * FROM cv_data")  
@@ -15,6 +24,14 @@ def index():
 
 @app.route('/cv')
 def cv():
+    """
+    Route for the CV page.
+
+    Retrieves CV data from the SQLite database and renders the 'cv2.html' template.
+
+    Returns:
+        str: Rendered HTML content for the CV page.
+    """
     conn = sqlite3.connect('cv_database.db')
     c = conn.cursor()
     c.execute("SELECT * FROM cv_data")  
@@ -25,3 +42,4 @@ def cv():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
