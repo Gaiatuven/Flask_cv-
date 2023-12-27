@@ -1,12 +1,34 @@
+"""This module provides a Python interface to the SQLite database engine."""
 import sqlite3
 
+
 def insert_data_and_get_variables():
+    """
+    Inserts data into the 'cv_data' table and checks if the table exists.
+
+    If the 'cv_data' table does not exist, it creates the table with the following columns:
+    - id (INTEGER, PRIMARY KEY, AUTOINCREMENT)
+    - name (TEXT, NOT NULL)
+    - email (TEXT, NOT NULL)
+    - phone (TEXT)
+    - address (TEXT)
+    - education (TEXT)
+    - skills (TEXT)
+    - experience (TEXT)
+    - projects (TEXT)
+
+    This function is designed to be used for initializing or updating the database schema.
+
+    Returns:
+        None
+    """
     conn = sqlite3.connect('cv_database.db')
     c = conn.cursor()
 
     # Check if the table already exists
     c.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='cv_data'")
     if not c.fetchone():
+        # Create the 'cv_data' table
         c.execute('''
             CREATE TABLE cv_data (
                 id INTEGER PRIMARY KEY AUTOINCREMENT, 
@@ -71,8 +93,3 @@ def insert_data_and_get_variables():
 
 # Call the function to insert data and get variables
 user_variables = insert_data_and_get_variables()
-
-# Access the variables as needed
-print("Name:", user_variables['name'])
-print("Email:", user_variables['email'])
-# ... and so on
